@@ -13,8 +13,7 @@
     "next": "13.2.4",
     "node-bigcommerce": "^4.1.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "serverless-nextjs-plugin": "^2.5.2-alpha.0"
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "eslint": "8.36.0",
