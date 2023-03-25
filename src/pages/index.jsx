@@ -71,98 +71,165 @@ export default function Protected() {
     router.push('/login')
   }
 
+  const styles = `
+  form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  max-width: 500px;
+}
+
+fieldset {
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+legend {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="number"] {
+  width: 100px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+button[type="submit"] {
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+button[type="submit"]:hover {
+  background-color: #3e8e41;
+}
+  `
+
   return (
-    <form onSubmit={handleSubmit}>
-      <fieldset>
-        <legend>Metal Markup</legend>
-        {Object.entries(metalMarkup).map(([metal, markup]) => (
-          <div key={metal}>
-            <label htmlFor={`metal-${metal}`}>{metal}</label>
-            <input
-              id={`metal-${metal}`}
-              type="number"
-              min="-100"
-              step="1"
-              value={markup}
-              onChange={(e) =>
-                setMetalMarkup((prev) => ({
-                  ...prev,
-                  [metal]: Number(e.target.value),
-                }))
-              }
-            />
-          </div>
-        ))}
-      </fieldset>
+    <>
+      <style>{styles}</style>
+      <form onSubmit={handleSubmit}>
+        <fieldset>
+          <legend>Metal Markup</legend>
+          {Object.entries(metalMarkup).map(([metal, markup]) => (
+            <div key={metal}>
+              <label htmlFor={`metal-${metal}`}>{metal}</label>
+              <input
+                id={`metal-${metal}`}
+                type="number"
+                min="-100"
+                step="1"
+                value={markup}
+                onChange={(e) =>
+                  setMetalMarkup((prev) => ({
+                    ...prev,
+                    [metal]: Number(e.target.value),
+                  }))
+                }
+              />
+            </div>
+          ))}
+        </fieldset>
 
-      <fieldset>
-        <legend>Type Markup</legend>
-        {Object.entries(typeMarkup).map(([type, markup]) => (
-          <div key={type}>
-            <label htmlFor={`type-${type}`}>{type}</label>
-            <input
-              id={`type-${type}`}
-              type="number"
-             min="-100"
-              step="1"
-              value={markup}
-              onChange={(e) =>
-                setTypeMarkup((prev) => ({
-                  ...prev,
-                  [type]: Number(e.target.value),
-                }))
-              }
-            />
-          </div>
-        ))}
-      </fieldset>
+        <fieldset>
+          <legend>Type Markup</legend>
+          {Object.entries(typeMarkup).map(([type, markup]) => (
+            <div key={type}>
+              <label htmlFor={`type-${type}`}>{type}</label>
+              <input
+                id={`type-${type}`}
+                type="number"
+                min="-100"
+                step="1"
+                value={markup}
+                onChange={(e) =>
+                  setTypeMarkup((prev) => ({
+                    ...prev,
+                    [type]: Number(e.target.value),
+                  }))
+                }
+              />
+            </div>
+          ))}
+        </fieldset>
 
-      <fieldset>
-        <legend>Weight Markup</legend>
-        {Object.entries(weightMarkup).map(([weight, markup]) => (
-          <div key={weight}>
-            <label htmlFor={`weight-${weight}`}>{weight}</label>
-            <input
-              id={`weight-${weight}`}
-              type="number"
-              min="-100"
-              step="1"
-              value={markup}
-              onChange={(e) =>
-                setWeightMarkup((prev) => ({
-                  ...prev,
-                  [weight]: Number(e.target.value),
-                }))
-              }
-            />
-          </div>
-        ))}
-      </fieldset>
+        <fieldset>
+          <legend>Weight Markup</legend>
+          {Object.entries(weightMarkup).map(([weight, markup]) => (
+            <div key={weight}>
+              <label htmlFor={`weight-${weight}`}>{weight}</label>
+              <input
+                id={`weight-${weight}`}
+                type="number"
+                min="-100"
+                step="1"
+                value={markup}
+                onChange={(e) =>
+                  setWeightMarkup((prev) => ({
+                    ...prev,
+                    [weight]: Number(e.target.value),
+                  }))
+                }
+              />
+            </div>
+          ))}
+        </fieldset>
 
-      <fieldset>
-        <legend>Brand Markup</legend>
-        {Object.entries(brandMarkup).map(([brand, markup]) => (
-          <div key={brand}>
-            <label htmlFor={`brand-${brand}`}>{brand}</label>
-            <input
-              id={`brand-${brand}`}
-              type="number"
-              min="-100"
-              step="1"
-              value={markup}
-              onChange={(e) =>
-                setBrandMarkup((prev) => ({
-                  ...prev,
-                  [brand]: Number(e.target.value),
-                }))
-              }
-            />
-          </div>
-        ))}
-      </fieldset>
-      <button style={{margin: '1rem', padding: '1rem', color: 'white', borderRadius: '20rem', backgroundColor: 'red'}} onClick={handleLogout}>Logout</button>
+        <fieldset>
+          <legend>Brand Markup</legend>
+          {Object.entries(brandMarkup).map(([brand, markup]) => (
+            <div key={brand}>
+              <label htmlFor={`brand-${brand}`}>{brand}</label>
+              <input
+                id={`brand-${brand}`}
+                type="number"
+                min="-100"
+                step="1"
+                value={markup}
+                onChange={(e) =>
+                  setBrandMarkup((prev) => ({
+                    ...prev,
+                    [brand]: Number(e.target.value),
+                  }))
+                }
+              />
+            </div>
+          ))}
+        </fieldset>
+        <button
+          style={{
+            margin: '1rem',
+            padding: '1rem',
+            color: 'white',
+            borderRadius: '20rem',
+            backgroundColor: 'red',
+          }}
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
 
-      <button type="submit">Save</button>
-    </form>
+        <button type="submit">Save</button>
+      </form>
+    </>
   )
 }

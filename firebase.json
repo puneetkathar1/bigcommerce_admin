@@ -11,10 +11,13 @@
   },
   "functions": {
     "source": ".",
-    "predeploy": [
-      "npm install",
-      "npm run build"
-    ],
-    "runtime": "nodejs14"
+    "predeploy": ["npm install", "npm run build"],
+    "runtime": "nodejs14",
+    "functions": [
+      {
+        "name": "nextjsFunc",
+        "timeoutSeconds": 540
+      }
+    ]
   }
 }

@@ -13,5 +13,7 @@ const nextjsServer = next({
 const nextjsHandle = nextjsServer.getRequestHandler()
 
 exports.nextjsFunc = https.onRequest((req, res) => {
+  req.setTimeout(540000) // 9 minutes * 60 seconds per minute * 1000 milliseconds per second
+  res.setTimeout(540000)
   return nextjsServer.prepare().then(() => nextjsHandle(req, res))
 })

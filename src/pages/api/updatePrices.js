@@ -1,7 +1,5 @@
 export default async function handler(req, res) {
   try {
-    const { authorization } = req.headers
-
     //Metal to check
     const metalPrices = {
       Gold: 'XAU',
@@ -19,7 +17,14 @@ export default async function handler(req, res) {
     const BrandMarkup = markup.BrandMarkup
 
     // Function to update the price of a single product
-    async function updateProductPrice(productId, price, weight, category) {
+    async function updateProductPrice(
+      productId,
+      price,
+      weight,
+      category,
+      req,
+      res,
+    ) {
       try {
         // Get the product by ID
         var myHeaders = new Headers()
@@ -103,12 +108,14 @@ export default async function handler(req, res) {
           body: JSON.stringify(product),
         }
 
-        return await fetch(
+        await fetch(
           `https://api.bigcommerce.com/stores/${process.env.STORE_HASH}/v3/catalog/products/${productId}`,
           requestOptions2,
         )
           .then((response) => response.json())
           .catch((error) => console.log('error', error))
+
+        return
       } catch (error) {
         return res
           .status(500)
@@ -117,7 +124,7 @@ export default async function handler(req, res) {
     }
 
     // Function to update the price of all products
-    async function updateAllProductPrices() {
+    async function updateAllProductPrices(req, res) {
       try {
         var myHeaders = new Headers()
         myHeaders.append('X-auth-token', process.env.ACCESS_TOKEN)
@@ -166,12 +173,13 @@ export default async function handler(req, res) {
                   1 / spotPrice[cat] / 31.1035,
                   weight,
                   metal,
+                  req,
+                  res
                 )
               }
             }
           }
         }
-        console.timeEnd()
         res.status(200).json({
           message: `Updated ${products.length} products.`,
         })
@@ -183,15 +191,8 @@ export default async function handler(req, res) {
     }
 
     // Call the function to update prices of all products in all categories
-    if (
-      authorization === `Bearer ${process.env.API_SECRET_KEY}` &&
-      req.method === 'POST'
-    ) {
-      updateAllProductPrices()
-    } else {
-      res.status(401).json({ success: false })
-    }
-    console.time()
+
+    await updateAllProductPrices(req, res)
   } catch (error) {
     console.log(`Error updating product prices: ${error}`)
   }

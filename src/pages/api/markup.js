@@ -1,30 +1,43 @@
-import fs from 'fs'
-import path from 'path'
+import admin from 'firebase-admin';
+import serviceAccount from '../../../eb-markup-live-firebase-adminsdk-z5o9e-4f16abb374.json';
 
-const markupFilePath = path.join(process.cwd(), 'public', 'markup.json')
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://eb-markup-live.firebaseio.com/"
+  });
+}
 
 export default function handler(req, res) {
-  // Read the JSON file
-  const markup = JSON.parse(fs.readFileSync(markupFilePath, 'utf-8'))
+  // Get a reference to your database
+  const db = admin.database();
+  const markupRef = db.ref('markup');
 
   // Handle GET requests to retrieve the markup variables
   if (req.method === 'GET') {
-    res.status(200).json(markup)
+    markupRef.once('value', (snapshot) => {
+      const markup = snapshot.val();
+      res.status(200).json(markup);
+    });
   }
 
   // Handle POST requests to update the markup variables
   if (req.method === 'POST') {
-    const { MetalMarkup, TypeMarkup, WeightMarkup, BrandMarkup } = req.body
+    const { MetalMarkup, TypeMarkup, WeightMarkup, BrandMarkup } = req.body;
 
     // Update the markup variables
-    markup.MetalMarkup = MetalMarkup
-    markup.TypeMarkup = TypeMarkup
-    markup.WeightMarkup = WeightMarkup
-    markup.BrandMarkup = BrandMarkup
-
-    // Write the updated JSON file
-    fs.writeFileSync(markupFilePath, JSON.stringify(markup, null, 2))
-
-    res.status(200).json({ message: 'Markup variables updated successfully.' })
+    markupRef.update({
+      MetalMarkup,
+      TypeMarkup,
+      WeightMarkup,
+      BrandMarkup
+    }, (error) => {
+      if (error) {
+        console.log(error);
+        res.status(500).json({ message: 'An error occurred while updating the markup variables.' });
+      } else {
+        res.status(200).json({ message: 'Markup variables updated successfully.' });
+      }
+    });
   }
 }
