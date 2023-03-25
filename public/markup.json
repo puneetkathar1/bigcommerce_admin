@@ -1,0 +1,24 @@
+{
+  "MetalMarkup": {
+    "Gold": 8,
+    "Silver": 35,
+    "Platinum": 35,
+    "Palladium": 0
+  },
+  "TypeMarkup": {
+    "Bars": 0,
+    "Coins": 0
+  },
+  "WeightMarkup": {
+    "Grams": 0,
+    "Ounce": 0,
+    "KG": 0,
+    "Tonne": 0
+  },
+  "BrandMarkup": {
+    "Britannia": 0,
+    "Maple": 0,
+    "Krugerrand": 0,
+    "Sovereign": 0
+  }
+}
