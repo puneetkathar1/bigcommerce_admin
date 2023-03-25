@@ -1,0 +1,12 @@
+name: Update Prices
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+
+jobs:
+  update-prices:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send POST request
+        run: curl -X POST https://eb-markup-live.web.app/api/updatePrices

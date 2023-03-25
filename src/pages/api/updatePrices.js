@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     }
 
     // Define constants for markup percentages
-    const res = await fetch('http://localhost:3000/api/markup')
+    const res = await fetch('https://eb-markup-live.web.app/api/markup')
     const markup = await res.json()
     const MetalMarkup = markup.MetalMarkup
     const TypeMarkup = markup.TypeMarkup
